@@ -1,0 +1,17 @@
+# Gateway resource -- creates an Envoy proxy deployment + LoadBalancer
+# service in openshift-ingress. MetalLB assigns it an external IP.
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: super-slim-gateway
+  namespace: openshift-ingress
+spec:
+  gatewayClassName: openshift-default
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+      hostname: "*.gwapi.apps.tallgeese.ultra.lab"
+      allowedRoutes:
+        namespaces:
+          from: All

@@ -1,0 +1,29 @@
+# Overlay: ambient
+#
+# Builds on the gateway overlay and adds Istio ambient mesh for
+# transparent pod-to-pod mTLS without sidecars.
+#
+# Architecture:
+#   - Gateway API at the edge (north-south traffic)
+#   - ztunnel DaemonSet on each node (east-west mTLS, L4)
+#   - Optional waypoint proxy per namespace (L7 policy)
+#
+# Your model pods still have zero sidecars. The ztunnel runs once
+# per node (~0.1 CPU + 200MB) and handles mTLS for all pods on
+# that node transparently.
+#
+# Prerequisites:
+#   - MetalLB operator installed
+#   - OSSM 3.x operator installed (for ambient mode)
+#
+# Apply with:
+#   oc apply -k manifests/overlays/ambient
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../gateway
+  - waypoint.yaml
+
+patches:
+  - path: namespace-patch.yaml

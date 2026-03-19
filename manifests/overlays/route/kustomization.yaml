@@ -1,0 +1,14 @@
+# Overlay: route
+#
+# The simplest option. Exposes the model via an OpenShift Route.
+# No Gateway API, no Service Mesh, no MetalLB required.
+# Works immediately on any OpenShift cluster including bare metal.
+#
+# Apply with:
+#   oc apply -k manifests/overlays/route
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+  - route.yaml

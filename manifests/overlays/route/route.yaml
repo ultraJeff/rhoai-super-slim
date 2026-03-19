@@ -1,0 +1,21 @@
+# OpenShift Route to expose the InferenceService externally.
+#
+# KServe RawDeployment creates a headless Service for the predictor,
+# so we route to the metrics Service which has a real ClusterIP.
+# Both services resolve to the same pod on port 8080.
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: phi-4-mini
+  namespace: super-slim-demo
+spec:
+  host: phi-4-mini.apps.tallgeese.ultra.lab
+  to:
+    kind: Service
+    name: phi-4-mini-metrics
+    weight: 100
+  port:
+    targetPort: 8080
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Allow

@@ -1,0 +1,23 @@
+# InferenceService deploying Phi-4-mini via KServe RawDeployment (CPU-only).
+# The model is pulled from HuggingFace at startup.
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: phi-4-mini
+  namespace: super-slim-demo
+  annotations:
+    serving.kserve.io/deploymentMode: RawDeployment
+spec:
+  predictor:
+    model:
+      runtime: vllm-cpu-runtime
+      modelFormat:
+        name: vLLM
+      storageUri: hf://microsoft/Phi-4-mini-instruct
+      resources:
+        requests:
+          cpu: "4"
+          memory: 12Gi
+        limits:
+          cpu: "8"
+          memory: 16Gi

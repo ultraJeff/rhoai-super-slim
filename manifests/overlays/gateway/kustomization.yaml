@@ -1,0 +1,21 @@
+# Overlay: gateway
+#
+# Adds Gateway API for external ingress instead of an OpenShift Route.
+# The Ingress Operator installs a lightweight OSSM v3 (Envoy) in
+# openshift-ingress when the GatewayClass is created -- no full
+# Service Mesh subscription needed, no sidecars in your pods.
+#
+# Prerequisites:
+#   - MetalLB operator installed (for bare metal LoadBalancer support)
+#   - An L2Advertisement + IPAddressPool configured for your network
+#
+# Apply with:
+#   oc apply -k manifests/overlays/gateway
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+  - gateway-class.yaml
+  - gateway.yaml
+  - httproute.yaml

@@ -1,0 +1,9 @@
+# GatewayClass triggers the Ingress Operator to install a lightweight
+# OSSM v3 (istiod + Envoy) in the openshift-ingress namespace.
+# This is NOT a full Service Mesh -- no sidecars, no SMCP to manage.
+apiVersion: gateway.networking.k8s.io/v1
+kind: GatewayClass
+metadata:
+  name: openshift-default
+spec:
+  controllerName: openshift.io/gateway-controller/v1

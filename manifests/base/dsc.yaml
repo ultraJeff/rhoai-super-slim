@@ -1,0 +1,65 @@
+# Complete DataScienceCluster for the "super slim" RHOAI stack.
+#
+# Only three components are Managed:
+#   - dashboard:          RHOAI web UI
+#   - kserve:             Model serving (RawDeployment mode, no Knative)
+#   - llamastackoperator: LlamaStack distribution support
+#
+# Everything else is explicitly Removed to keep the footprint minimal.
+apiVersion: datasciencecluster.opendatahub.io/v1
+kind: DataScienceCluster
+metadata:
+  name: default-dsc
+  labels:
+    app.kubernetes.io/created-by: rhods-operator
+    app.kubernetes.io/instance: default-dsc
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: datasciencecluster
+    app.kubernetes.io/part-of: rhods-operator
+spec:
+  components:
+    dashboard:
+      managementState: Managed
+    kserve:
+      managementState: Managed
+      nim:
+        managementState: Managed
+      rawDeploymentServiceConfig: Headless
+      serving:
+        ingressGateway:
+          certificate:
+            type: OpenshiftDefaultIngress
+        managementState: Removed
+        name: knative-serving
+    llamastackoperator:
+      managementState: Managed
+    codeflare:
+      managementState: Removed
+    datasciencepipelines:
+      argoWorkflowsControllers:
+        managementState: Managed
+      managementState: Removed
+    feastoperator:
+      managementState: Removed
+    kueue:
+      defaultClusterQueueName: default
+      defaultLocalQueueName: default
+      managementState: Removed
+    modelmeshserving:
+      managementState: Removed
+    modelregistry:
+      managementState: Removed
+      registriesNamespace: rhoai-model-registries
+    ray:
+      managementState: Removed
+    trainingoperator:
+      managementState: Removed
+    trustyai:
+      eval:
+        lmeval:
+          permitCodeExecution: deny
+          permitOnline: deny
+      managementState: Removed
+    workbenches:
+      managementState: Removed
+      workbenchNamespace: rhods-notebooks

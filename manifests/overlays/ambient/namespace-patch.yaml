@@ -1,0 +1,9 @@
+# Enroll the demo namespace in the ambient mesh.
+# The ztunnel DaemonSet picks up pods in labeled namespaces
+# and wraps their traffic in mTLS automatically -- no sidecars.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: super-slim-demo
+  labels:
+    istio.io/dataplane-mode: ambient

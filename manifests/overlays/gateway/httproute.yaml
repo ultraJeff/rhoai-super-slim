@@ -1,0 +1,16 @@
+# HTTPRoute directing Gateway traffic to the model service.
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: phi-4-mini
+  namespace: super-slim-demo
+spec:
+  parentRefs:
+    - name: super-slim-gateway
+      namespace: openshift-ingress
+  hostnames:
+    - "phi-4-mini.gwapi.apps.tallgeese.ultra.lab"
+  rules:
+    - backendRefs:
+        - name: phi-4-mini-predictor
+          port: 80

@@ -1,0 +1,20 @@
+# Optional: waypoint proxy for L7 policy enforcement.
+# Without this, ambient provides only L4 mTLS (ztunnel).
+# With this, you get L7 features: HTTP header routing, retries,
+# rate limiting, authorization policies per request.
+#
+# The waypoint is a shared Envoy proxy per namespace --
+# still no sidecar in your model pods.
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: super-slim-waypoint
+  namespace: super-slim-demo
+  labels:
+    istio.io/waypoint-for: service
+spec:
+  gatewayClassName: istio-waypoint
+  listeners:
+    - name: mesh
+      protocol: HBONE
+      port: 15008
