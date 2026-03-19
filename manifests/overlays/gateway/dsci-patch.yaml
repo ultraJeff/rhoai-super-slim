@@ -1,0 +1,17 @@
+# Enable Service Mesh in the DSCI for Gateway API support.
+# The Ingress Operator installs a lightweight OSSM v3 when a
+# GatewayClass is created, but the DSCI needs Managed to allow it.
+apiVersion: dscinitialization.opendatahub.io/v1
+kind: DSCInitialization
+metadata:
+  name: default-dsci
+spec:
+  serviceMesh:
+    managementState: Managed
+    auth:
+      audiences:
+        - https://kubernetes.default.svc
+    controlPlane:
+      metricsCollection: Istio
+      name: data-science-smcp
+      namespace: istio-system

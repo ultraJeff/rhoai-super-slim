@@ -1,0 +1,17 @@
+# DSCInitialization for the "super slim" stack.
+# Service Mesh is Removed in the base -- no OSSM v2 operator needed.
+apiVersion: dscinitialization.opendatahub.io/v1
+kind: DSCInitialization
+metadata:
+  name: default-dsci
+spec:
+  applicationsNamespace: redhat-ods-applications
+  monitoring:
+    managementState: Managed
+    metrics: {}
+    namespace: redhat-ods-monitoring
+  serviceMesh:
+    managementState: Removed
+  trustedCABundle:
+    customCABundle: ""
+    managementState: Managed

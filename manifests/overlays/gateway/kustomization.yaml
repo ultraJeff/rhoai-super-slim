@@ -19,3 +19,6 @@ resources:
   - gateway-class.yaml
   - gateway.yaml
   - httproute.yaml
+
+patches:
+  - path: dsci-patch.yaml
